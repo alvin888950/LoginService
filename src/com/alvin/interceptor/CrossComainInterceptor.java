@@ -41,6 +41,11 @@ public class CrossComainInterceptor extends BaseAction implements HandlerInterce
 		if (Referer == null || Referer.indexOf("swagger-ui") > 0 ) {
 			return true;
 		}
+		//管理员账号登录
+		if (request.getRequestURI().indexOf("admin/accountLogin")>-1) {
+			crossComain(response, request);
+			return true;
+		}
 		String token=request.getHeader("token");
 		if (StringUtil.isBlank(token)) {
 			jsonObj=new JSONObject();

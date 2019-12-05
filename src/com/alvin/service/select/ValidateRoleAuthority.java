@@ -14,35 +14,26 @@ import net.sf.json.JSONObject;
  * @author Alvin
  *
  */
-public class ValidateUserAuthority {
+public class ValidateRoleAuthority {
 
 	private Role role;
 	private JSONObject jsonObj;
-	public ValidateUserAuthority(JSONObject jsonObj){
+	public ValidateRoleAuthority(JSONObject jsonObj){
 		this.jsonObj=jsonObj;
 	}
 	
-	public JSONObject getResult(UserResult user) throws DaoException{
-		if (user==null) {
-			CodeResult.setResult(jsonObj, 12);
-			return jsonObj;
+	public String getResult(Integer roleId) throws DaoException{
+		
+		if (getRole(roleId)==false) {
+			return "";
 		}
-		if (user.getUserState()==null||user.getUserState().equals(0)) {
-			CodeResult.setResult(jsonObj, 13);
-			return jsonObj;
-		}
-		if (getRole(user.getRoleId())==false) {
-			return jsonObj;
-		}
-		user.setRoleName(role.getRoleName());
-		jsonObj.put("data", user);
-		return jsonObj;
+		return role.getRoleName();
 	}
 	
 	private Boolean getRole(Integer roleId) throws DaoException{
 		IroleDao dao=new RoleImpl();
 		role= dao.selectOne(roleId);
-		if (role.getUseState().equals(0)) {
+		if (role==null||role.getUseState().equals(0)) {
 			CodeResult.setResult(jsonObj, 13);
 			return false;
 		}

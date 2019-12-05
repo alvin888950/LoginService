@@ -17,8 +17,8 @@ import com.alvin.result.UserResult;
 public class UserImpl extends DBSource implements IuserDao {
 
 	@Override
-	public UserResult login(String username, String pwd) throws DaoException {
-		String sql="select * from user where userLoginName='"+username+"' and userPwd='"+pwd+"'";
+	public UserResult login(String username, String pwd,Integer orgId) throws DaoException {
+		String sql="select * from user where orgId="+orgId+" and userLoginName='"+username+"' and userPwd='"+pwd+"'";
 		return super.getSql().selectOne(sql, UserResult.class);
 	}
 

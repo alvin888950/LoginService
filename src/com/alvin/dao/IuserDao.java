@@ -14,6 +14,6 @@ import com.alvin.result.UserResult;
  */
 public interface IuserDao {
 	 
-	UserResult login(String username,String pwd) throws DaoException;
+	UserResult login(String username,String pwd,Integer orgId) throws DaoException;
 
 }

@@ -1,10 +1,9 @@
 package com.alvin.dao;
 
-import com.alvin.entity.Admin;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
 import com.alvin.common.DaoException;
+import com.alvin.entity.Admin;
 
 /**
  * @Title :Admin.java
@@ -16,67 +15,15 @@ import com.alvin.common.DaoException;
  * @version :版本 3.0
  */
 public interface IadminDao {
+	 	
 	/**
-	 * 添加
-	 * 
-	 * @author alvin
+	 * 账号登录
+	 * @param loginName 用户名
+	 * @param pwd 密码
+	 * @param orgId 机构编号
 	 * @return
-	 * @since
+	 * @throws DaoException 
 	 */
-	void addAdmin(Admin admin) throws DaoException;
-
-	/**
-	 * 删除
-	 * 
-	 * @author alvin
-	 * @return
-	 * @since
-	 */
-	void delAdminById(String ADMIN_IDs) throws DaoException;
-
-	/**
-	 * 修改
-	 * 
-	 * @author alvin
-	 * @return
-	 * @since
-	 */
-	void updAdmin(Admin admin) throws DaoException;
-
-	/**
-	 * 查询
-	 * 
-	 * @author alvin
-	 * @return
-	 * @since
-	 */
-	List<Admin> selectByMapAdmin(Admin admin, Map<String, Object> map) throws DaoException;
-
-	/**
-	 * 统计总数
-	 * 
-	 * @author alvin
-	 * @return
-	 * @since
-	 */
-	Integer countByMapAdmin(Admin admin, Map<String, Object> map) throws DaoException;
-
-	/**
-	 * 通过编号查询
-	 * 
-	 * @author alvin
-	 * @return
-	 * @since
-	 */
-	Admin selectOneByID(Integer ID) throws DaoException;
-
-	/**
-	 * 通过编号查询
-	 * 
-	 * @author alvin
-	 * @return
-	 * @since
-	 */
-	Admin selectOneByObj(Admin entity) throws DaoException;
+	Admin accountLogin(String loginName,String pwd,Integer orgId) throws DaoException;
 
 }

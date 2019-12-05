@@ -1,5 +1,6 @@
 package com.alvin.action;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alvin.common.CodeResult;
 import com.alvin.common.StringUtil;
+import com.alvin.service.select.AdminAccountLogin;
 import com.alvin.service.select.UserAccountLogin;
 
 import io.swagger.annotations.Api;
@@ -25,18 +27,18 @@ import net.sf.json.JSONObject;
  * @version :版本 3.0
  */
 @Controller
-@RequestMapping(value = { "user" })
-@Api(value = "user", description = "用户API")
-public class UserAction extends BaseAction {
+@RequestMapping(value = { "admin" })
+@Api(value = "user", description = "管理员API")
+public class AdminAction extends BaseAction {
 
 	 /**
-	  * 登录
+	  * 账号登录
 	  * @param request
 	  * @param response
 	  * @param username
 	  * @param pwd
 	  */
-	@ApiOperation(httpMethod = "GET", value = "登录")
+	@ApiOperation(httpMethod = "GET", value = "账号登录")
 	@RequestMapping("accountLogin")
 	 public void accountLogin(HttpServletRequest request,HttpServletResponse response,@RequestParam String username,@RequestParam String pwd,@RequestParam Integer orgId){
 		 JSONObject jsonObj = new JSONObject();
@@ -45,7 +47,7 @@ public class UserAction extends BaseAction {
 				CodeResult.setResult(jsonObj, 11,"用户名或密码");
 				return;
 			}
-			UserAccountLogin service=new UserAccountLogin(jsonObj);
+			AdminAccountLogin service=new AdminAccountLogin(jsonObj);
 			service.getResult(username, pwd,orgId);
 		} catch (Exception e) {
 			CodeResult.setResult(jsonObj, 99);

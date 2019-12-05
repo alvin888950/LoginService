@@ -48,6 +48,9 @@ public class CodeResult {
 		case 13:
 			jsonObj.put("msg", "用户正在审核中！");
 			return;
+		case 14:
+			jsonObj.put("msg", "账号或密码错误！");
+			return;
 		default:
 			break;
 		}
