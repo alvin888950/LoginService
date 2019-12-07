@@ -1,7 +1,11 @@
 package com.alvin.common;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FileUtils;
 
+import java.io.File;
+import java.io.IOException;
+import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -47,11 +51,14 @@ public final class RSAUtil {
             return "";
         }
         try {
+        	publicKey=FileUtils.readFileToString(new File(publicKey));
             byte[] decoded = Base64.decodeBase64(publicKey);
             RSAPublicKey pubKey = (RSAPublicKey) KeyFactory.getInstance(ALGORITHM_NAME).generatePublic(new X509EncodedKeySpec(decoded));
             Cipher cipher = Cipher.getInstance(ALGORITHM_NAME);
             cipher.init(Cipher.ENCRYPT_MODE, pubKey);
-            return Base64.encodeBase64String(cipher.doFinal(str.getBytes(CHARSET)));
+            String result= Base64.encodeBase64String(cipher.doFinal(str.getBytes(CHARSET)));
+            result=result.replace("+", "-push-");
+            return result;
         } catch (Exception e) {
             e.printStackTrace();
             return "";
@@ -70,6 +77,8 @@ public final class RSAUtil {
             return null;
         }
         try {
+        	str=str.replace("-push-", "+");
+        	privateKey=FileUtils.readFileToString(new File(privateKey));
             //64位解码加密后的字符串
             byte[] inputByte = Base64.decodeBase64(str.getBytes(CHARSET));
             //base64编码的私钥
@@ -117,17 +126,46 @@ public final class RSAUtil {
             return null;
         }
 
-//        KeyPair keyPair = keyPairGenerator.generateKeyPair();
-
-        // 公钥
-//        Key publicKey = keyPair.getPublic();
-//        byte[] publicKeyBytes = publicKey.getEncoded();
-//        String publicKeyBase64 = Base64.encodeBase64String(publicKeyBytes);
-
-        // 私钥
-//        Key privateKey = keyPair.getPrivate();
-//        byte[] privateKeyBytes = privateKey.getEncoded();
-//        String privateKeyBase64 = Base64.encodeBase64String(privateKeyBytes);
+  
     }
+    
+    private void createRSA(){
+    	  KeyPair keyPair = RSAUtil.genRSAKes();
+
+          // 公钥
+          Key publicKey = keyPair.getPublic();
+          byte[] publicKeyBytes = publicKey.getEncoded();
+          String publicKeyBase64 = Base64.encodeBase64String(publicKeyBytes);
+          System.out.println("public:"+publicKeyBase64);
+
+          // 私钥
+          Key privateKey = keyPair.getPrivate();
+         byte[] privateKeyBytes = privateKey.getEncoded();
+          String privateKeyBase64 = Base64.encodeBase64String(privateKeyBytes);
+          System.out.println("private:"+privateKeyBase64);
+    }
+    
+    public static void main(String[] args) throws IOException {
+    	  String sn = "1_ad_dd_dd";
+
+          long time = System.currentTimeMillis();
+
+          String publicKeyFilename = "C:\\Users\\Alvin\\Workspaces\\MyEclipse2017\\.metadata\\.me_tcat85\\webapps\\LoginService\\WEB-INF\\classes\\public.key";
+          String privateKeyFilename = "C:\\Users\\Alvin\\Workspaces\\MyEclipse2017\\.metadata\\.me_tcat85\\webapps\\LoginService\\WEB-INF\\classes\\private.key";
+          //String puk = FileUtils.readFileToString(new File(publicKeyFilename));
+          //String prk = FileUtils.readFileToString(new File(privateKeyFilename));
+
+
+          //明文
+          String cipherText = sn + time;
+
+          //使用公式加密
+          String encrypt = RSAUtil.encrypt(cipherText,publicKeyFilename);
+          System.out.println("加密后" + encrypt);
+
+          //使用私匙解密
+          String decrypt = RSAUtil.decrypt(encrypt, privateKeyFilename);
+          System.out.println("解密后" + decrypt);
+	}
 
 }

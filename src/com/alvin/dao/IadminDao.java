@@ -1,7 +1,5 @@
 package com.alvin.dao;
 
-import org.springframework.stereotype.Service;
-
 import com.alvin.common.DaoException;
 import com.alvin.entity.Admin;
 
@@ -26,4 +24,11 @@ public interface IadminDao {
 	 */
 	Admin accountLogin(String loginName,String pwd,Integer orgId) throws DaoException;
 
+	/**
+	 * 通过编号查询
+	 * @param adminId
+	 * @return
+	 * @throws DaoException 
+	 */
+	Admin selectAdmiById(Integer adminId) throws DaoException;
 }

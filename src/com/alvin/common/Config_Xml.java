@@ -18,8 +18,9 @@ public class Config_Xml {
 	public static String config_path;
 
 	public  static String PRIVATE_KEY;
+	public static String PUBLIC_KEY;
 	public static void getConfig() {
-		PRIVATE_KEY=config_path+"private.key";
+		
 	}
 
 	/**

@@ -5,6 +5,7 @@ import com.alvin.common.DaoException;
 import com.alvin.dao.IuserDao;
 import com.alvin.dao.impl.UserImpl;
 import com.alvin.result.UserResult;
+import com.alvin.service.validate.ValidateRoleAuthority;
 
 import net.sf.json.JSONObject;
 

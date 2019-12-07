@@ -1,5 +1,7 @@
 package com.alvin.listener;
 
+import java.io.File;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -27,8 +29,13 @@ public class DataInitLinstener implements ServletContextListener {
 		try {
 			System.out.println("初始化数据");
 			String configPath = arg0.getServletContext().getRealPath("").toString();
-			configPath += "/WEB-INF/classes/config/";
-			new Config_Xml().init(configPath);
+			if (configPath.substring(configPath.length()-1,configPath.length()).equals(File.separator)) {
+				configPath=configPath.substring(0,configPath.length()-1);
+			}
+			configPath += File.separator+"WEB-INF"+File.separator+"classes"+File.separator;
+			Config_Xml.PRIVATE_KEY=configPath+"private.key";
+			Config_Xml.PUBLIC_KEY=configPath+"public.key";
+			new Config_Xml().init(configPath+"config/");
 
 			System.out.println("初始化数据完毕");
 

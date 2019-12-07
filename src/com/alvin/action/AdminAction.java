@@ -1,6 +1,5 @@
 package com.alvin.action;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.alvin.common.CodeResult;
 import com.alvin.common.StringUtil;
 import com.alvin.service.select.AdminAccountLogin;
-import com.alvin.service.select.UserAccountLogin;
+import com.alvin.service.select.GetAdminSimpleInfo;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -56,4 +55,24 @@ public class AdminAction extends BaseAction {
 			super.out(response, jsonObj);
 		}
 	 }
+	
+	/**
+	 * 获取admin信息
+	 * @param request
+	 * @param response
+	 * @param token
+	 */
+	@RequestMapping("getAdminInfo")
+	public void getAdminInfo(HttpServletRequest request,HttpServletResponse response,@RequestParam String token,@RequestParam Integer type){
+		JSONObject jsonObj = new JSONObject();
+		try {
+			GetAdminSimpleInfo service=new GetAdminSimpleInfo(jsonObj);
+			service.getResul(token,type);
+		} catch (Exception e) {
+			CodeResult.setResult(jsonObj, 99);
+			e.printStackTrace();
+		} finally {
+			super.out(response, jsonObj);
+		}
+	}
 }

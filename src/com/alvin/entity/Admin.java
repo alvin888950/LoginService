@@ -13,7 +13,7 @@ import lombok.Data;
  */
 @Data
 public class Admin {
-	private Integer ADMIN_ID;// ID
+	private Integer adminId;// ID
 	private String adminName;// 姓名
 	private String adminLoginName;// 用户名
 	private String adminPwd;// 密码

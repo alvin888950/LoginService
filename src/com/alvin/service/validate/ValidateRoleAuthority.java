@@ -1,4 +1,4 @@
-package com.alvin.service.select;
+package com.alvin.service.validate;
 
 import com.alvin.common.CodeResult;
 import com.alvin.common.DaoException;
@@ -27,6 +27,7 @@ public class ValidateRoleAuthority {
 		if (getRole(roleId)==false) {
 			return "";
 		}
+		CodeResult.setResult(jsonObj, 0);
 		return role.getRoleName();
 	}
 	

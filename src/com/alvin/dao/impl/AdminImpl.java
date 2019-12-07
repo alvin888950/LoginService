@@ -30,4 +30,10 @@ public class AdminImpl extends DBSource implements IadminDao {
 		sql.append(" and adminPwd ='").append(pwd).append("'");
 		return super.getSql().selectOne(sql.toString(), Admin.class);
 	}
+
+	@Override
+	public Admin selectAdmiById(Integer adminId) throws DaoException {
+		String sql="select * from admin where adminId="+adminId;
+		return super.getSql().selectOne(sql, Admin.class);
+	}
 }
